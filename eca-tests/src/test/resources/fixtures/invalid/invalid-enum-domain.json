@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","modelId":"invalid-fixture","name":"Invalid fixture","description":"Invalid enum domain fixture.","parameters":[{"id":"parameter-value","name":"Value","description":"Empty enum domain.","type":"ENUM"}],"payloads":[],"events":[],"conditions":[],"conditionSets":[],"actions":[],"rules":[]}

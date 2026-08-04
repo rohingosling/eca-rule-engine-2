@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.rohingosling.eca</groupId>
+        <artifactId>eca-rule-engine-2</artifactId>
+        <version>2.0.0</version>
+    </parent>
+
+    <artifactId>eca-client</artifactId>
+    <name>eca-client</name>
+    <description>Desktop SDI, local file, HTTP client, and simulator adapters.</description>
+
+    <properties>
+        <maven.compiler.release>${client.java.release}</maven.compiler.release>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.rohingosling.eca</groupId>
+            <artifactId>eca-application</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rohingosling.eca</groupId>
+            <artifactId>eca-json</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>eca-client</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-client-java-17-dependency-closure</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <enforceBytecodeVersion>
+                                    <maxJdkVersion>${client.java.release}</maxJdkVersion>
+                                    <ignoredScopes>
+                                        <ignoredScope>test</ignoredScope>
+                                    </ignoredScopes>
+                                </enforceBytecodeVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>extra-enforcer-rules</artifactId>
+                        <version>${extra.enforcer.rules.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>${javafx.maven.plugin.version}</version>
+                <configuration>
+                    <mainClass>com.rohingosling.eca.client.ClientMain</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.rohingosling.eca.client.ClientMain</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>client-native</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.gluonhq</groupId>
+                        <artifactId>gluonfx-maven-plugin</artifactId>
+                        <version>${gluonfx.maven.plugin.version}</version>
+                        <configuration>
+                            <mainClass>com.rohingosling.eca.client.ClientMain</mainClass>
+                            <verbose>true</verbose>
+                            <javafxStaticSdkVersion>${javafx.static.sdk.version}</javafxStaticSdkVersion>
+                            <bundlesList>
+                                <list>com.rohingosling.eca.client.messages</list>
+                            </bundlesList>
+                            <resourcesList>
+                                <list>.*\\.css$</list>
+                                <list>.*\\.png$</list>
+                                <list>.*\\.properties$</list>
+                            </resourcesList>
+                            <enableSWRendering>true</enableSWRendering>
+                            <releaseConfiguration>
+                                <vendor>Rohin Gosling</vendor>
+                                <description>ECA Rule Engine 2 desktop client.</description>
+                            </releaseConfiguration>
+                            <nativeImageArgs>
+                                <arg>--no-fallback</arg>
+                                <arg>-H:-NativeArchitecture</arg>
+                                <arg>-H:CPUFeatures=SSE2</arg>
+                                <arg>--enable-url-protocols=http,https</arg>
+                                <arg>-H:+ReportExceptionStackTraces</arg>
+                                <arg>--native-image-info</arg>
+                                <arg>-H:DashboardDump=${project.build.directory}/gluonfx/native-dashboard</arg>
+                                <arg>-H:+DashboardJson</arg>
+                            </nativeImageArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

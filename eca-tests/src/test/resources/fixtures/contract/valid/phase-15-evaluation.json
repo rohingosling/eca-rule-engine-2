@@ -1,0 +1,410 @@
+{
+  "schemaVersion" : "1.0",
+  "modelId" : "phase-15-evaluation",
+  "name" : "Phase 15 evaluation parity",
+  "description" : "Exercises compiler and pure evaluator semantics across Java and TypeScript.",
+  "parameters" : [ {
+    "id" : "parameter-boolean",
+    "name" : "Boolean",
+    "description" : "Boolean comparison value.",
+    "type" : "BOOLEAN"
+  }, {
+    "id" : "parameter-enum",
+    "name" : "Enumeration",
+    "description" : "Enumeration comparison value.",
+    "type" : "ENUM",
+    "enumValues" : [ "ALPHA", "ZULU" ]
+  }, {
+    "id" : "parameter-integer",
+    "name" : "Integer",
+    "description" : "Exact signed 64-bit comparison value.",
+    "type" : "INTEGER"
+  }, {
+    "id" : "parameter-string",
+    "name" : "String",
+    "description" : "String comparison value.",
+    "type" : "STRING"
+  } ],
+  "payloads" : [ {
+    "id" : "payload-empty",
+    "name" : "Empty payload",
+    "description" : "Permits no payload properties.",
+    "parameterIds" : [ ]
+  }, {
+    "id" : "payload-full",
+    "name" : "Full payload",
+    "description" : "Permits every parity parameter.",
+    "parameterIds" : [ "parameter-boolean", "parameter-enum", "parameter-integer", "parameter-string" ]
+  }, {
+    "id" : "payload-integer",
+    "name" : "Integer payload",
+    "description" : "Permits the exact signed integer parameter.",
+    "parameterIds" : [ "parameter-integer" ]
+  } ],
+  "events" : [ {
+    "id" : "event-between-exclusive",
+    "name" : "Between exclusive event",
+    "description" : "Exercises exclusive range matching.",
+    "payloadId" : "payload-integer"
+  }, {
+    "id" : "event-between-inclusive",
+    "name" : "Between inclusive event",
+    "description" : "Exercises inclusive range matching.",
+    "payloadId" : "payload-integer"
+  }, {
+    "id" : "event-empty",
+    "name" : "Empty event",
+    "description" : "Exercises a payload-free event and empty condition set.",
+    "payloadId" : "payload-empty"
+  }, {
+    "id" : "event-equals",
+    "name" : "Equals event",
+    "description" : "Exercises exact integer equality.",
+    "payloadId" : "payload-integer"
+  }, {
+    "id" : "event-greater-than",
+    "name" : "Greater-than event",
+    "description" : "Exercises strict greater-than matching.",
+    "payloadId" : "payload-integer"
+  }, {
+    "id" : "event-greater-than-or-equal",
+    "name" : "Greater-than-or-equal event",
+    "description" : "Exercises inclusive lower-bound matching.",
+    "payloadId" : "payload-integer"
+  }, {
+    "id" : "event-less-than",
+    "name" : "Less-than event",
+    "description" : "Exercises strict less-than matching.",
+    "payloadId" : "payload-integer"
+  }, {
+    "id" : "event-less-than-or-equal",
+    "name" : "Less-than-or-equal event",
+    "description" : "Exercises inclusive upper-bound matching.",
+    "payloadId" : "payload-integer"
+  }, {
+    "id" : "event-not-equals",
+    "name" : "Not-equals event",
+    "description" : "Exercises exact integer inequality.",
+    "payloadId" : "payload-integer"
+  }, {
+    "id" : "event-other",
+    "name" : "Other event",
+    "description" : "Exercises event filtering with no candidate rules.",
+    "payloadId" : "payload-integer"
+  }, {
+    "id" : "event-signed-range",
+    "name" : "Signed range event",
+    "description" : "Exercises the complete signed 64-bit domain.",
+    "payloadId" : "payload-integer"
+  }, {
+    "id" : "event-specificity",
+    "name" : "Specificity event",
+    "description" : "Exercises wildcard weighting, payload extension, and maximum specificity.",
+    "payloadId" : "payload-full"
+  }, {
+    "id" : "event-tie",
+    "name" : "Tie event",
+    "description" : "Exercises lexicographic rule identifier tie-breaking.",
+    "payloadId" : "payload-integer"
+  }, {
+    "id" : "event-type-equality",
+    "name" : "Type equality event",
+    "description" : "Exercises string, boolean, and enumeration equality.",
+    "payloadId" : "payload-full"
+  } ],
+  "conditions" : [ {
+    "id" : "condition-between-exclusive",
+    "name" : "Between exclusive",
+    "description" : "Matches integers strictly between zero and ten.",
+    "parameterId" : "parameter-integer",
+    "operator" : "BETWEEN_EXCLUSIVE",
+    "value" : 0,
+    "secondValue" : 10
+  }, {
+    "id" : "condition-between-inclusive",
+    "name" : "Between inclusive",
+    "description" : "Matches integers inclusively between zero and ten.",
+    "parameterId" : "parameter-integer",
+    "operator" : "BETWEEN_INCLUSIVE",
+    "value" : 0,
+    "secondValue" : 10
+  }, {
+    "id" : "condition-boolean-true",
+    "name" : "Boolean true",
+    "description" : "Matches the true Boolean value.",
+    "parameterId" : "parameter-boolean",
+    "operator" : "EQUALS",
+    "value" : true
+  }, {
+    "id" : "condition-enum-alpha",
+    "name" : "Enumeration alpha",
+    "description" : "Matches the ALPHA enumeration value.",
+    "parameterId" : "parameter-enum",
+    "operator" : "EQUALS",
+    "value" : "ALPHA"
+  }, {
+    "id" : "condition-equals-five",
+    "name" : "Equals five",
+    "description" : "Matches the exact integer five.",
+    "parameterId" : "parameter-integer",
+    "operator" : "EQUALS",
+    "value" : 5
+  }, {
+    "id" : "condition-greater-than-five",
+    "name" : "Greater than five",
+    "description" : "Matches integers greater than five.",
+    "parameterId" : "parameter-integer",
+    "operator" : "GREATER_THAN",
+    "value" : 5
+  }, {
+    "id" : "condition-greater-than-or-equal-five",
+    "name" : "Greater than or equal to five",
+    "description" : "Matches integers greater than or equal to five.",
+    "parameterId" : "parameter-integer",
+    "operator" : "GREATER_THAN_OR_EQUAL",
+    "value" : 5
+  }, {
+    "id" : "condition-less-than-five",
+    "name" : "Less than five",
+    "description" : "Matches integers less than five.",
+    "parameterId" : "parameter-integer",
+    "operator" : "LESS_THAN",
+    "value" : 5
+  }, {
+    "id" : "condition-less-than-or-equal-five",
+    "name" : "Less than or equal to five",
+    "description" : "Matches integers less than or equal to five.",
+    "parameterId" : "parameter-integer",
+    "operator" : "LESS_THAN_OR_EQUAL",
+    "value" : 5
+  }, {
+    "id" : "condition-not-equals-five",
+    "name" : "Not equals five",
+    "description" : "Matches every integer except five.",
+    "parameterId" : "parameter-integer",
+    "operator" : "NOT_EQUALS",
+    "value" : 5
+  }, {
+    "id" : "condition-signed-range",
+    "name" : "Complete signed range",
+    "description" : "Matches the complete signed 64-bit integer domain.",
+    "parameterId" : "parameter-integer",
+    "operator" : "BETWEEN_INCLUSIVE",
+    "value" : -9223372036854775808,
+    "secondValue" : 9223372036854775807
+  }, {
+    "id" : "condition-string-any",
+    "name" : "Any string",
+    "description" : "Explicitly ignores the string payload state.",
+    "parameterId" : "parameter-string",
+    "operator" : "ANY"
+  }, {
+    "id" : "condition-string-value",
+    "name" : "String value",
+    "description" : "Matches the VALUE string.",
+    "parameterId" : "parameter-string",
+    "operator" : "EQUALS",
+    "value" : "VALUE"
+  } ],
+  "conditionSets" : [ {
+    "id" : "condition-set-between-exclusive",
+    "name" : "Between exclusive",
+    "description" : "Uses the exclusive range predicate.",
+    "conditionIds" : [ "condition-between-exclusive" ]
+  }, {
+    "id" : "condition-set-between-inclusive",
+    "name" : "Between inclusive",
+    "description" : "Uses the inclusive range predicate.",
+    "conditionIds" : [ "condition-between-inclusive" ]
+  }, {
+    "id" : "condition-set-empty",
+    "name" : "Empty set",
+    "description" : "Omits every condition.",
+    "bindings" : { }
+  }, {
+    "id" : "condition-set-equals",
+    "name" : "Equals",
+    "description" : "Uses exact equality.",
+    "conditionIds" : [ "condition-equals-five" ]
+  }, {
+    "id" : "condition-set-greater-than",
+    "name" : "Greater than",
+    "description" : "Uses strict greater-than comparison.",
+    "conditionIds" : [ "condition-greater-than-five" ]
+  }, {
+    "id" : "condition-set-greater-than-or-equal",
+    "name" : "Greater than or equal",
+    "description" : "Uses inclusive lower-bound comparison.",
+    "conditionIds" : [ "condition-greater-than-or-equal-five" ]
+  }, {
+    "id" : "condition-set-less-than",
+    "name" : "Less than",
+    "description" : "Uses strict less-than comparison.",
+    "conditionIds" : [ "condition-less-than-five" ]
+  }, {
+    "id" : "condition-set-less-than-or-equal",
+    "name" : "Less than or equal",
+    "description" : "Uses inclusive upper-bound comparison.",
+    "conditionIds" : [ "condition-less-than-or-equal-five" ]
+  }, {
+    "id" : "condition-set-not-equals",
+    "name" : "Not equals",
+    "description" : "Uses exact inequality.",
+    "conditionIds" : [ "condition-not-equals-five" ]
+  }, {
+    "id" : "condition-set-signed-range",
+    "name" : "Signed range",
+    "description" : "Uses the complete signed 64-bit range.",
+    "conditionIds" : [ "condition-signed-range" ]
+  }, {
+    "id" : "condition-set-specific",
+    "name" : "Specific",
+    "description" : "Combines one concrete predicate with one explicit wildcard.",
+    "conditionIds" : [ "condition-equals-five", "condition-string-any" ]
+  }, {
+    "id" : "condition-set-type-equality",
+    "name" : "Type equality",
+    "description" : "Combines string, Boolean, and enumeration equality.",
+    "conditionIds" : [ "condition-boolean-true", "condition-enum-alpha", "condition-string-value" ]
+  }, {
+    "id" : "condition-set-wildcard",
+    "name" : "Wildcard",
+    "description" : "Contains one explicit wildcard.",
+    "conditionIds" : [ "condition-string-any" ]
+  } ],
+  "actions" : [ {
+    "id" : "action-empty",
+    "name" : "Empty action",
+    "description" : "Selected by the empty condition set."
+  }, {
+    "id" : "action-general",
+    "name" : "General action",
+    "description" : "Selected only when no more-specific rule wins."
+  }, {
+    "id" : "action-match",
+    "name" : "Match action",
+    "description" : "Selected when an operator predicate matches."
+  }, {
+    "id" : "action-specific",
+    "name" : "Specific action",
+    "description" : "Selected by the highest-specificity matching rule."
+  }, {
+    "id" : "action-tie-alpha",
+    "name" : "Tie alpha action",
+    "description" : "Selected by the lexicographically first tied rule."
+  }, {
+    "id" : "action-tie-zulu",
+    "name" : "Tie zulu action",
+    "description" : "Loses the deterministic tie-break."
+  }, {
+    "id" : "action-type-equality",
+    "name" : "Type equality action",
+    "description" : "Selected when all typed equality predicates match."
+  } ],
+  "rules" : [ {
+    "id" : "rule-between-exclusive",
+    "name" : "Between exclusive rule",
+    "description" : "Evaluates the exclusive integer range.",
+    "eventId" : "event-between-exclusive",
+    "conditionSetId" : "condition-set-between-exclusive",
+    "actionId" : "action-match"
+  }, {
+    "id" : "rule-between-inclusive",
+    "name" : "Between inclusive rule",
+    "description" : "Evaluates the inclusive integer range.",
+    "eventId" : "event-between-inclusive",
+    "conditionSetId" : "condition-set-between-inclusive",
+    "actionId" : "action-match"
+  }, {
+    "id" : "rule-empty",
+    "name" : "Empty rule",
+    "description" : "Matches a payload-free event with specificity zero.",
+    "eventId" : "event-empty",
+    "conditionSetId" : "condition-set-empty",
+    "actionId" : "action-empty"
+  }, {
+    "id" : "rule-equals",
+    "name" : "Equals rule",
+    "description" : "Evaluates exact integer equality.",
+    "eventId" : "event-equals",
+    "conditionSetId" : "condition-set-equals",
+    "actionId" : "action-match"
+  }, {
+    "id" : "rule-greater-than",
+    "name" : "Greater-than rule",
+    "description" : "Evaluates strict greater-than comparison.",
+    "eventId" : "event-greater-than",
+    "conditionSetId" : "condition-set-greater-than",
+    "actionId" : "action-match"
+  }, {
+    "id" : "rule-greater-than-or-equal",
+    "name" : "Greater-than-or-equal rule",
+    "description" : "Evaluates inclusive lower-bound comparison.",
+    "eventId" : "event-greater-than-or-equal",
+    "conditionSetId" : "condition-set-greater-than-or-equal",
+    "actionId" : "action-match"
+  }, {
+    "id" : "rule-less-than",
+    "name" : "Less-than rule",
+    "description" : "Evaluates strict less-than comparison.",
+    "eventId" : "event-less-than",
+    "conditionSetId" : "condition-set-less-than",
+    "actionId" : "action-match"
+  }, {
+    "id" : "rule-less-than-or-equal",
+    "name" : "Less-than-or-equal rule",
+    "description" : "Evaluates inclusive upper-bound comparison.",
+    "eventId" : "event-less-than-or-equal",
+    "conditionSetId" : "condition-set-less-than-or-equal",
+    "actionId" : "action-match"
+  }, {
+    "id" : "rule-not-equals",
+    "name" : "Not-equals rule",
+    "description" : "Evaluates exact integer inequality.",
+    "eventId" : "event-not-equals",
+    "conditionSetId" : "condition-set-not-equals",
+    "actionId" : "action-match"
+  }, {
+    "id" : "rule-signed-range",
+    "name" : "Signed range rule",
+    "description" : "Evaluates exact signed 64-bit boundary ordering.",
+    "eventId" : "event-signed-range",
+    "conditionSetId" : "condition-set-signed-range",
+    "actionId" : "action-match"
+  }, {
+    "id" : "rule-specificity-general",
+    "name" : "General specificity rule",
+    "description" : "Matches through one explicit wildcard.",
+    "eventId" : "event-specificity",
+    "conditionSetId" : "condition-set-wildcard",
+    "actionId" : "action-general"
+  }, {
+    "id" : "rule-specificity-specific",
+    "name" : "Specific specificity rule",
+    "description" : "Wins with one concrete predicate and one explicit wildcard.",
+    "eventId" : "event-specificity",
+    "conditionSetId" : "condition-set-specific",
+    "actionId" : "action-specific"
+  }, {
+    "id" : "rule-tie-alpha",
+    "name" : "Tie alpha rule",
+    "description" : "Wins an equal-specificity tie lexicographically.",
+    "eventId" : "event-tie",
+    "conditionSetId" : "condition-set-equals",
+    "actionId" : "action-tie-alpha"
+  }, {
+    "id" : "rule-tie-zulu",
+    "name" : "Tie zulu rule",
+    "description" : "Loses an equal-specificity tie lexicographically.",
+    "eventId" : "event-tie",
+    "conditionSetId" : "condition-set-equals",
+    "actionId" : "action-tie-zulu"
+  }, {
+    "id" : "rule-type-equality",
+    "name" : "Type equality rule",
+    "description" : "Evaluates string, Boolean, and enumeration equality conjunctively.",
+    "eventId" : "event-type-equality",
+    "conditionSetId" : "condition-set-type-equality",
+    "actionId" : "action-type-equality"
+  } ]
+}

@@ -1,0 +1,123 @@
+{
+  "rules": [
+    {
+      "actionId": "action-accept",
+      "conditionSetId": "condition-set-legacy",
+      "description": "Uses the legacy binding representation.",
+      "eventId": "event-contract",
+      "id": "rule-legacy",
+      "name": "Legacy rule"
+    },
+    {
+      "id": "rule-predefined",
+      "name": "Predefined rule",
+      "description": "Uses reusable condition predicates.",
+      "eventId": "event-contract",
+      "conditionSetId": "condition-set-predefined",
+      "actionId": "action-accept"
+    }
+  ],
+  "actions": [
+    {
+      "description": "Accept the occurrence.",
+      "name": "Accept",
+      "id": "action-accept"
+    }
+  ],
+  "conditionSets": [
+    {
+      "id": "condition-set-predefined",
+      "name": "Predefined",
+      "description": "Selected reusable predicates.",
+      "conditionIds": [ "condition-string-any", "condition-integer-range" ]
+    },
+    {
+      "id": "condition-set-legacy",
+      "name": "Legacy",
+      "description": "Explicit wildcard and concrete legacy bindings.",
+      "bindings": {
+        "condition-string-any": null,
+        "condition-integer-minimum": -9223372036854775808
+      }
+    },
+    {
+      "id": "condition-set-empty",
+      "name": "Empty",
+      "description": "Omits every available condition.",
+      "bindings": {}
+    }
+  ],
+  "conditions": [
+    {
+      "id": "condition-string-unconfigured",
+      "name": "Unconfigured string",
+      "description": "Retains an omitted predicate.",
+      "parameterId": "parameter-string"
+    },
+    {
+      "id": "condition-string-any",
+      "name": "Any string",
+      "description": "Retains an explicitly selected ANY predicate.",
+      "parameterId": "parameter-string",
+      "operator": "ANY"
+    },
+    {
+      "id": "condition-integer-range",
+      "name": "Integer range",
+      "description": "Covers the complete signed 64-bit domain.",
+      "parameterId": "parameter-integer",
+      "operator": "BETWEEN_INCLUSIVE",
+      "value": -9223372036854775808,
+      "secondValue": 9223372036854775807
+    },
+    {
+      "id": "condition-integer-minimum",
+      "name": "Integer minimum",
+      "description": "Uses the signed 64-bit minimum.",
+      "parameterId": "parameter-integer",
+      "operator": "EQUALS",
+      "value": -9223372036854775808
+    }
+  ],
+  "events": [
+    {
+      "payloadId": "payload-contract",
+      "description": "Carries contract values.",
+      "name": "Contract event",
+      "id": "event-contract"
+    }
+  ],
+  "payloads": [
+    {
+      "parameterIds": [ "parameter-string", "parameter-integer", "parameter-enum" ],
+      "description": "Permits all contract parameters.",
+      "name": "Contract payload",
+      "id": "payload-contract"
+    }
+  ],
+  "parameters": [
+    {
+      "id": "parameter-string",
+      "name": "String",
+      "description": "String contract value.",
+      "type": "STRING"
+    },
+    {
+      "id": "parameter-integer",
+      "name": "Integer",
+      "description": "Signed 64-bit contract value.",
+      "type": "INTEGER"
+    },
+    {
+      "id": "parameter-enum",
+      "name": "Enumeration",
+      "description": "Enumeration ordering contract.",
+      "type": "ENUM",
+      "enumValues": [ "ZULU", "ALPHA" ]
+    }
+  ],
+  "description": "Exercises exact integers, ordering, wildcard, ANY, and omission behavior.",
+  "name": "Phase 14 contract",
+  "modelId": "phase-14-contract",
+  "schemaVersion": "1.0"
+}

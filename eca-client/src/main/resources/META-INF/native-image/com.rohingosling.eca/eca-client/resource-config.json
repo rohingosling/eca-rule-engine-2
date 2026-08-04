@@ -1,0 +1,23 @@
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": "\\Qcom/rohingosling/eca/client/messages.properties\\E"
+      },
+      {
+        "pattern": "\\Qcom/rohingosling/eca/client/client.css\\E"
+      },
+      {
+        "pattern": "\\Qcom/rohingosling/eca/client/eca-rule-engine.png\\E"
+      },
+      {
+        "pattern": "\\Qcom/rohingosling/eca/client/user-guide/\\E.*\\.png"
+      }
+    ]
+  },
+  "bundles": [
+    {
+      "name": "com.rohingosling.eca.client.messages"
+    }
+  ]
+}

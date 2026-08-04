@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","modelId":"invalid-fixture","name":"Invalid fixture","description":"Invalid parameter type fixture.","parameters":[{"id":"parameter-value","name":"Value","description":"Invalid numeric type.","type":"NUMBER"}],"payloads":[],"events":[],"conditions":[],"conditionSets":[],"actions":[],"rules":[]}

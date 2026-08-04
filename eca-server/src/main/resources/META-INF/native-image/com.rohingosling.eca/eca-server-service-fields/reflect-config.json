@@ -1,0 +1,110 @@
+[
+  {
+    "name": "io.helidon.common.config.ConfigFactory__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.common.mapper.DefaultMapperProvider__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.common.mapper.DefaultResolverService__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.common.mapper.MappersFactory__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.common.mapper.MappersImpl__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.config.ConfigProvider__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.config.ConfigurationValueFactory__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.config.MetaConfigFactory__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.http.Headers__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.http.HttpPrologue__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.http.ServerRequestHeaders__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.metrics.api.MeterRegistryFactory__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.metrics.api.MetricsFactoryFactory__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.service.registry.EventManagerImpl__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.service.registry.InstanceName__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.service.registry.InterceptionMetadata__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.service.registry.PerRequestScopeHandler__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.service.registry.Scopes__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.service.registry.ServiceLoader__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.service.registry.ServiceRegistry__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.webserver.LoomServer__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.webserver.RequestScopeFeatureProvider__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.webserver.WebServerService__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.webserver.WebServerStarterService__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.webserver.http.HttpEntryPointsImpl__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.webserver.http.ServerRequest__ServiceDescriptor",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.helidon.webserver.http.ServerResponse__ServiceDescriptor",
+    "allDeclaredFields": true
+  }
+]

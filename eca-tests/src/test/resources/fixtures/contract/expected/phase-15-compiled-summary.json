@@ -1,0 +1,25 @@
+{
+  "modelId": "phase-14-contract",
+  "revision": "sha256:00afb3311b811c7a00540e19e7c721b73da07610f9b609a9b1f0a7f15ecbe0f0",
+  "parameterIds": [ "parameter-enum", "parameter-integer", "parameter-string" ],
+  "payloadIds": [ "payload-contract" ],
+  "eventIds": [ "event-contract" ],
+  "conditionSetIds": [ "condition-set-empty", "condition-set-legacy", "condition-set-predefined" ],
+  "actionIds": [ "action-accept" ],
+  "rules": [
+    {
+      "id": "rule-legacy",
+      "eventId": "event-contract",
+      "conditionSetId": "condition-set-legacy",
+      "actionId": "action-accept",
+      "specificity": 3
+    },
+    {
+      "id": "rule-predefined",
+      "eventId": "event-contract",
+      "conditionSetId": "condition-set-predefined",
+      "actionId": "action-accept",
+      "specificity": 3
+    }
+  ]
+}

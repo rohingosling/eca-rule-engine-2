@@ -1,0 +1,471 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/rohingosling/eca-rule-engine-2/schema/eca-authoring-model.schema.json",
+    "title": "ECA Rule Engine 2 authoring model",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "schemaVersion",
+        "modelId",
+        "name",
+        "description",
+        "parameters",
+        "payloads",
+        "events",
+        "conditions",
+        "conditionSets",
+        "actions",
+        "rules"
+    ],
+    "properties": {
+        "schemaVersion": {
+            "const": "1.0"
+        },
+        "modelId": {
+            "$ref": "#/$defs/identifier"
+        },
+        "name": {
+            "$ref": "#/$defs/displayText"
+        },
+        "description": {
+            "$ref": "#/$defs/displayText"
+        },
+        "parameters": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/parameter"
+            }
+        },
+        "payloads": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/payload"
+            }
+        },
+        "events": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/event"
+            }
+        },
+        "conditions": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/condition"
+            }
+        },
+        "conditionSets": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/conditionSet"
+            }
+        },
+        "actions": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/action"
+            }
+        },
+        "rules": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/rule"
+            }
+        }
+    },
+    "$defs": {
+        "identifier": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+        },
+        "displayText": {
+            "type": "string",
+            "minLength": 1
+        },
+        "concreteValue": {
+            "type": [
+                "string",
+                "integer",
+                "boolean"
+            ]
+        },
+        "entityFields": {
+            "type": "object",
+            "required": [
+                "id",
+                "name",
+                "description"
+            ],
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/identifier"
+                },
+                "name": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "description": {
+                    "$ref": "#/$defs/displayText"
+                }
+            }
+        },
+        "parameter": {
+            "allOf": [
+                {
+                    "$ref": "#/$defs/entityFields"
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                        "id",
+                        "name",
+                        "description",
+                        "type"
+                    ],
+                    "properties": {
+                        "id": {
+                            "$ref": "#/$defs/identifier"
+                        },
+                        "name": {
+                            "$ref": "#/$defs/displayText"
+                        },
+                        "description": {
+                            "$ref": "#/$defs/displayText"
+                        },
+                        "type": {
+                            "enum": [
+                                "STRING",
+                                "INTEGER",
+                                "BOOLEAN",
+                                "ENUM"
+                            ]
+                        },
+                        "enumValues": {
+                            "type": "array",
+                            "minItems": 1,
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "string",
+                                "minLength": 1
+                            }
+                        }
+                    },
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "ENUM"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "enumValues"
+                        ]
+                    },
+                    "else": {
+                        "not": {
+                            "required": [
+                                "enumValues"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "name",
+                "description",
+                "parameterIds"
+            ],
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/identifier"
+                },
+                "name": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "description": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "parameterIds": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "$ref": "#/$defs/identifier"
+                    }
+                }
+            }
+        },
+        "event": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "name",
+                "description",
+                "payloadId"
+            ],
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/identifier"
+                },
+                "name": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "description": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "payloadId": {
+                    "$ref": "#/$defs/identifier"
+                }
+            }
+        },
+        "condition": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "name",
+                "description",
+                "parameterId"
+            ],
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/identifier"
+                },
+                "name": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "description": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "parameterId": {
+                    "$ref": "#/$defs/identifier"
+                },
+                "operator": {
+                    "enum": [
+                        "EQUALS",
+                        "NOT_EQUALS",
+                        "GREATER_THAN",
+                        "GREATER_THAN_OR_EQUAL",
+                        "LESS_THAN",
+                        "LESS_THAN_OR_EQUAL",
+                        "BETWEEN_EXCLUSIVE",
+                        "BETWEEN_INCLUSIVE",
+                        "ANY"
+                    ]
+                },
+                "value": {
+                    "$ref": "#/$defs/concreteValue"
+                },
+                "secondValue": {
+                    "$ref": "#/$defs/concreteValue"
+                }
+            },
+            "oneOf": [
+                {
+                    "not": {
+                        "anyOf": [
+                            {
+                                "required": [
+                                    "operator"
+                                ]
+                            },
+                            {
+                                "required": [
+                                    "value"
+                                ]
+                            },
+                            {
+                                "required": [
+                                    "secondValue"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "required": [
+                        "operator"
+                    ],
+                    "properties": {
+                        "operator": {
+                            "const": "ANY"
+                        }
+                    },
+                    "not": {
+                        "anyOf": [
+                            {
+                                "required": [
+                                    "value"
+                                ]
+                            },
+                            {
+                                "required": [
+                                    "secondValue"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "required": [
+                        "operator",
+                        "value"
+                    ],
+                    "properties": {
+                        "operator": {
+                            "enum": [
+                                "EQUALS",
+                                "NOT_EQUALS",
+                                "GREATER_THAN",
+                                "GREATER_THAN_OR_EQUAL",
+                                "LESS_THAN",
+                                "LESS_THAN_OR_EQUAL"
+                            ]
+                        }
+                    },
+                    "not": {
+                        "required": [
+                            "secondValue"
+                        ]
+                    }
+                },
+                {
+                    "required": [
+                        "operator",
+                        "value",
+                        "secondValue"
+                    ],
+                    "properties": {
+                        "operator": {
+                            "enum": [
+                                "BETWEEN_EXCLUSIVE",
+                                "BETWEEN_INCLUSIVE"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "conditionSet": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "name",
+                "description"
+            ],
+            "oneOf": [
+                {
+                    "required": [
+                        "conditionIds"
+                    ],
+                    "not": {
+                        "required": [
+                            "bindings"
+                        ]
+                    }
+                },
+                {
+                    "required": [
+                        "bindings"
+                    ],
+                    "not": {
+                        "required": [
+                            "conditionIds"
+                        ]
+                    }
+                }
+            ],
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/identifier"
+                },
+                "name": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "description": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "bindings": {
+                    "type": "object",
+                    "propertyNames": {
+                        "$ref": "#/$defs/identifier"
+                    },
+                    "additionalProperties": {
+                        "type": [
+                            "string",
+                            "integer",
+                            "boolean",
+                            "null"
+                        ]
+                    }
+                },
+                "conditionIds": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "$ref": "#/$defs/identifier"
+                    }
+                }
+            }
+        },
+        "action": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "name",
+                "description"
+            ],
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/identifier"
+                },
+                "name": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "description": {
+                    "$ref": "#/$defs/displayText"
+                }
+            }
+        },
+        "rule": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "name",
+                "description",
+                "eventId",
+                "conditionSetId",
+                "actionId"
+            ],
+            "properties": {
+                "id": {
+                    "$ref": "#/$defs/identifier"
+                },
+                "name": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "description": {
+                    "$ref": "#/$defs/displayText"
+                },
+                "eventId": {
+                    "$ref": "#/$defs/identifier"
+                },
+                "conditionSetId": {
+                    "$ref": "#/$defs/identifier"
+                },
+                "actionId": {
+                    "$ref": "#/$defs/identifier"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","modelId":"phase-14-duplicate","name":"Duplicate","description":"Nested duplicate fixture.","parameters":[],"payloads":[],"events":[],"conditions":[],"conditionSets":[{"id":"condition-set-duplicate","name":"Duplicate","description":"Contains a duplicate binding member.","bindings":{"condition-one":null,"condition-one":null}}],"actions":[],"rules":[]}

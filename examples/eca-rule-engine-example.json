@@ -1,0 +1,318 @@
+{
+  "schemaVersion" : "1.0",
+  "modelId" : "eca-rule-engine-example",
+  "name" : "ECA Rule Engine Example",
+  "description" : "Courier selection model for product orders, returns, and cancellations.",
+  "parameters" : [ {
+    "id" : "parameter-assigned-courier",
+    "name" : "Assigned Courier",
+    "description" : "Courier or concierge service assigned to an existing order.",
+    "type" : "ENUM",
+    "enumValues" : [ "CONCIERGE", "INTERNATIONAL_COURIER", "LOCAL_COURIER" ]
+  }, {
+    "id" : "parameter-delivery-type",
+    "name" : "Delivery type",
+    "description" : "Order delivery type.",
+    "type" : "ENUM",
+    "enumValues" : [ "PRIORITY", "SAME_DAY", "SCHEDULED", "STANDARD" ]
+  }, {
+    "id" : "parameter-order-reference",
+    "name" : "Order Reference",
+    "description" : "Reference code for an order.",
+    "type" : "STRING"
+  }, {
+    "id" : "parameter-product-category",
+    "name" : "Product Category",
+    "description" : "Category of product for an order.",
+    "type" : "STRING"
+  }, {
+    "id" : "parameter-quantity",
+    "name" : "Quantity",
+    "description" : "Quantity of items in the order.",
+    "type" : "INTEGER"
+  }, {
+    "id" : "parameter-region",
+    "name" : "Region",
+    "description" : "Delivery region, local or international.",
+    "type" : "ENUM",
+    "enumValues" : [ "INTERNATIONAL", "LOCAL" ]
+  }, {
+    "id" : "parameter-vip",
+    "name" : "VIP",
+    "description" : "VIP indicator.",
+    "type" : "BOOLEAN"
+  } ],
+  "payloads" : [ {
+    "id" : "payload-cancel-order",
+    "name" : "Cancel Order",
+    "description" : "Cancel and order.",
+    "parameterIds" : [ "parameter-assigned-courier", "parameter-order-reference" ]
+  }, {
+    "id" : "payload-order-product",
+    "name" : "Order Product",
+    "description" : "Product order request.",
+    "parameterIds" : [ "parameter-delivery-type", "parameter-product-category", "parameter-quantity", "parameter-region", "parameter-vip" ]
+  }, {
+    "id" : "payload-return-product",
+    "name" : "Return Product",
+    "description" : "Product return request.",
+    "parameterIds" : [ "parameter-delivery-type", "parameter-order-reference", "parameter-product-category", "parameter-quantity", "parameter-region", "parameter-vip" ]
+  } ],
+  "events" : [ {
+    "id" : "event-cancel-order",
+    "name" : "Cancel an order",
+    "description" : "Order cancel request.",
+    "payloadId" : "payload-cancel-order"
+  }, {
+    "id" : "event-order-product",
+    "name" : "Order Product",
+    "description" : "Product order request.",
+    "payloadId" : "payload-order-product"
+  }, {
+    "id" : "event-return-product",
+    "name" : "Return Product",
+    "description" : "Product return request.",
+    "payloadId" : "payload-return-product"
+  } ],
+  "conditions" : [ {
+    "id" : "condition-assigned-courier-concierge",
+    "name" : "Assigned Courier - Concierge",
+    "description" : "Order assigned to the concierge service.",
+    "parameterId" : "parameter-assigned-courier",
+    "operator" : "EQUALS",
+    "value" : "CONCIERGE"
+  }, {
+    "id" : "condition-assigned-courier-international",
+    "name" : "Assigned Courier - International Courier",
+    "description" : "Order assigned to the international courier.",
+    "parameterId" : "parameter-assigned-courier",
+    "operator" : "EQUALS",
+    "value" : "INTERNATIONAL_COURIER"
+  }, {
+    "id" : "condition-assigned-courier-local",
+    "name" : "Assigned Courier - Local Courier",
+    "description" : "Order assigned to the local courier.",
+    "parameterId" : "parameter-assigned-courier",
+    "operator" : "EQUALS",
+    "value" : "LOCAL_COURIER"
+  }, {
+    "id" : "condition-delivery-type-priority",
+    "name" : "Delivery Type - Priority",
+    "description" : "Priority delivery.",
+    "parameterId" : "parameter-delivery-type",
+    "operator" : "EQUALS",
+    "value" : "PRIORITY"
+  }, {
+    "id" : "condition-delivery-type-same-day",
+    "name" : "Delivery Type - Same Day",
+    "description" : "Same-day delivery.",
+    "parameterId" : "parameter-delivery-type",
+    "operator" : "EQUALS",
+    "value" : "SAME_DAY"
+  }, {
+    "id" : "condition-delivery-type-scheduled",
+    "name" : "Delivery Type - Scheduled",
+    "description" : "Scheduled delivery.",
+    "parameterId" : "parameter-delivery-type",
+    "operator" : "EQUALS",
+    "value" : "SCHEDULED"
+  }, {
+    "id" : "condition-delivery-type-standard",
+    "name" : "Delivery Type - Standard",
+    "description" : "Standard delivery.",
+    "parameterId" : "parameter-delivery-type",
+    "operator" : "EQUALS",
+    "value" : "STANDARD"
+  }, {
+    "id" : "condition-product-category-comercial",
+    "name" : "Product Category - Comercial",
+    "description" : "Commercial product delivery.",
+    "parameterId" : "parameter-product-category",
+    "operator" : "EQUALS",
+    "value" : "COMERCIAL"
+  }, {
+    "id" : "condition-product-category-retail",
+    "name" : "Product Category - Retail",
+    "description" : "Retail product delivery.",
+    "parameterId" : "parameter-product-category",
+    "operator" : "EQUALS",
+    "value" : "RETAIL"
+  }, {
+    "id" : "condition-quantity-any",
+    "name" : "Quantity Any",
+    "description" : "Ignore quantity.",
+    "parameterId" : "parameter-quantity",
+    "operator" : "ANY"
+  }, {
+    "id" : "condition-quantity-tier-1",
+    "name" : "Quantity - Tier 1",
+    "description" : "Price tier 1.",
+    "parameterId" : "parameter-quantity",
+    "operator" : "BETWEEN_INCLUSIVE",
+    "value" : 0,
+    "secondValue" : 100
+  }, {
+    "id" : "condition-quantity-tier-2",
+    "name" : "Quantity - Tier 2",
+    "description" : "Pricing tier 2.",
+    "parameterId" : "parameter-quantity",
+    "operator" : "BETWEEN_EXCLUSIVE",
+    "value" : 100,
+    "secondValue" : 1000
+  }, {
+    "id" : "condition-quantity-tier-3",
+    "name" : "Quantity - Tier 3",
+    "description" : "Pricing tier 3.",
+    "parameterId" : "parameter-quantity",
+    "operator" : "GREATER_THAN_OR_EQUAL",
+    "value" : 1000
+  }, {
+    "id" : "condition-region-international",
+    "name" : "Region - International",
+    "description" : "International delivery.",
+    "parameterId" : "parameter-region",
+    "operator" : "EQUALS",
+    "value" : "INTERNATIONAL"
+  }, {
+    "id" : "condition-region-local",
+    "name" : "Region - Local",
+    "description" : "Local delivery.",
+    "parameterId" : "parameter-region",
+    "operator" : "EQUALS",
+    "value" : "LOCAL"
+  }, {
+    "id" : "condition-vip-false",
+    "name" : "Customer - Non VIP",
+    "description" : "Non-VIP customer.",
+    "parameterId" : "parameter-vip",
+    "operator" : "EQUALS",
+    "value" : false
+  }, {
+    "id" : "condition-vip-true",
+    "name" : "Customer - VIP",
+    "description" : "VIP customer.",
+    "parameterId" : "parameter-vip",
+    "operator" : "EQUALS",
+    "value" : true
+  } ],
+  "conditionSets" : [ {
+    "id" : "condition-set-assigned-courier-concierge",
+    "name" : "Assigned Courier - Concierge",
+    "description" : "Order assigned to the concierge service.",
+    "conditionIds" : [ "condition-assigned-courier-concierge" ]
+  }, {
+    "id" : "condition-set-assigned-courier-international",
+    "name" : "Assigned Courier - International Courier",
+    "description" : "Order assigned to the international courier.",
+    "conditionIds" : [ "condition-assigned-courier-international" ]
+  }, {
+    "id" : "condition-set-assigned-courier-local",
+    "name" : "Assigned Courier - Local Courier",
+    "description" : "Order assigned to the local courier.",
+    "conditionIds" : [ "condition-assigned-courier-local" ]
+  }, {
+    "id" : "condition-set-non-vip-international",
+    "name" : "Non VIP - International",
+    "description" : "International delivery for a non-VIP customer.",
+    "conditionIds" : [ "condition-region-international", "condition-vip-false" ]
+  }, {
+    "id" : "condition-set-non-vip-local",
+    "name" : "Non VIP - Local",
+    "description" : "Local delivery for a non-VIP customer.",
+    "conditionIds" : [ "condition-region-local", "condition-vip-false" ]
+  }, {
+    "id" : "condition-set-retail-non-vip-local-standard",
+    "name" : "Retail - Non VIP - Local - Standard",
+    "description" : "Standard, local, non-VIP, retail delivery.",
+    "conditionIds" : [ "condition-delivery-type-standard", "condition-product-category-retail", "condition-quantity-any", "condition-region-local", "condition-vip-false" ]
+  }, {
+    "id" : "condition-set-vip",
+    "name" : "VIP Customer",
+    "description" : "Delivery for a VIP customer.",
+    "conditionIds" : [ "condition-vip-true" ]
+  } ],
+  "actions" : [ {
+    "id" : "action-concierge",
+    "name" : "Select - Concierge",
+    "description" : "Select concierge service."
+  }, {
+    "id" : "action-international-courier",
+    "name" : "Select - International Courier",
+    "description" : "Select international courier"
+  }, {
+    "id" : "action-local-courier",
+    "name" : "Select - Local Courier",
+    "description" : "Select local courier."
+  } ],
+  "rules" : [ {
+    "id" : "rule-cancel-order-concierge",
+    "name" : "Cancel Order - Concierge",
+    "description" : "Select the concierge service assigned to the cancelled order.",
+    "eventId" : "event-cancel-order",
+    "conditionSetId" : "condition-set-assigned-courier-concierge",
+    "actionId" : "action-concierge"
+  }, {
+    "id" : "rule-cancel-order-international-courier",
+    "name" : "Cancel Order - International Courier",
+    "description" : "Select the international courier assigned to the cancelled order.",
+    "eventId" : "event-cancel-order",
+    "conditionSetId" : "condition-set-assigned-courier-international",
+    "actionId" : "action-international-courier"
+  }, {
+    "id" : "rule-cancel-order-local-courier",
+    "name" : "Cancel Order - Local Courier",
+    "description" : "Select the local courier assigned to the cancelled order.",
+    "eventId" : "event-cancel-order",
+    "conditionSetId" : "condition-set-assigned-courier-local",
+    "actionId" : "action-local-courier"
+  }, {
+    "id" : "rule-order-product-non-vip-international",
+    "name" : "Order Product - Non VIP - International",
+    "description" : "Select the international courier for an international non-VIP product order.",
+    "eventId" : "event-order-product",
+    "conditionSetId" : "condition-set-non-vip-international",
+    "actionId" : "action-international-courier"
+  }, {
+    "id" : "rule-order-product-non-vip-local",
+    "name" : "Order Product - Non VIP - Local",
+    "description" : "Select the local courier for a local non-VIP product order.",
+    "eventId" : "event-order-product",
+    "conditionSetId" : "condition-set-non-vip-local",
+    "actionId" : "action-local-courier"
+  }, {
+    "id" : "rule-order-product-vip",
+    "name" : "Order Product - VIP",
+    "description" : "Select the concierge service for a VIP product order.",
+    "eventId" : "event-order-product",
+    "conditionSetId" : "condition-set-vip",
+    "actionId" : "action-concierge"
+  }, {
+    "id" : "rule-return-product-non-vip-international",
+    "name" : "Return Product - Non VIP - International",
+    "description" : "Select the international courier for an international non-VIP product return.",
+    "eventId" : "event-return-product",
+    "conditionSetId" : "condition-set-non-vip-international",
+    "actionId" : "action-international-courier"
+  }, {
+    "id" : "rule-return-product-non-vip-local",
+    "name" : "Return Product - Non VIP - Local",
+    "description" : "Select the local courier for a local non-VIP product return.",
+    "eventId" : "event-return-product",
+    "conditionSetId" : "condition-set-non-vip-local",
+    "actionId" : "action-local-courier"
+  }, {
+    "id" : "rule-return-product-vip",
+    "name" : "Return Product - VIP",
+    "description" : "Select the concierge service for a VIP product return.",
+    "eventId" : "event-return-product",
+    "conditionSetId" : "condition-set-vip",
+    "actionId" : "action-concierge"
+  }, {
+    "id" : "rule-test",
+    "name" : "Test Rule",
+    "description" : "Test rule.",
+    "eventId" : "event-order-product",
+    "conditionSetId" : "condition-set-retail-non-vip-local-standard",
+    "actionId" : "action-local-courier"
+  } ]
+}

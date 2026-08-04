@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "allowImportingTsExtensions": false,
+    "allowJs": false,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2024"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2024",
+    "types": [
+      "node",
+      "vite/client"
+    ]
+  },
+  "include": [
+    "src",
+    "tests",
+    "playwright.config.ts",
+    "playwright.phase-17.config.ts",
+    "playwright.phase-18.config.ts",
+    "playwright.phase-19.config.ts",
+    "playwright.phase-20.config.ts",
+    "vitest.config.ts",
+    "vitest.phase-15.config.ts",
+    "vitest.phase-16.config.ts",
+    "vitest.phase-17.config.ts",
+    "vitest.phase-18.config.ts",
+    "vite.config.ts"
+  ]
+}

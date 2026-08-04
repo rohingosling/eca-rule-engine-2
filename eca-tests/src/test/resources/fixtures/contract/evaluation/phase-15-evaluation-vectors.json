@@ -1,0 +1,327 @@
+{
+  "models": {
+    "phase-15": {
+      "path": "eca-tests/src/test/resources/fixtures/contract/valid/phase-15-evaluation.json",
+      "revision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+    },
+    "phase-14": {
+      "path": "eca-tests/src/test/resources/fixtures/contract/valid/phase-14-ordering-and-integers.json",
+      "revision": "sha256:00afb3311b811c7a00540e19e7c721b73da07610f9b609a9b1f0a7f15ecbe0f0"
+    },
+    "courier": {
+      "path": "examples/eca-rule-engine-example.json",
+      "revision": "sha256:80b79031c38d691528c8a8e10d6454d4b004e9f77665a47d73217d3b6ece55d5"
+    }
+  },
+  "vectors": [
+    {
+      "id": "equals-match",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-equals\",\"payload\":{\"parameter-integer\":5}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-match",
+        "ruleId": "rule-equals",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "equals-present-null",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-equals\",\"payload\":{\"parameter-integer\":null}}",
+      "expected": {
+        "outcome": "NO_ACTION",
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "equals-omitted-key",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-equals\",\"payload\":{}}",
+      "expected": {
+        "outcome": "NO_ACTION",
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "not-equals-match",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-not-equals\",\"payload\":{\"parameter-integer\":4}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-match",
+        "ruleId": "rule-not-equals",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "not-equals-no-match",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-not-equals\",\"payload\":{\"parameter-integer\":5}}",
+      "expected": {
+        "outcome": "NO_ACTION",
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "greater-than-match",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-greater-than\",\"payload\":{\"parameter-integer\":6}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-match",
+        "ruleId": "rule-greater-than",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "greater-than-boundary",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-greater-than\",\"payload\":{\"parameter-integer\":5}}",
+      "expected": {
+        "outcome": "NO_ACTION",
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "greater-than-or-equal-boundary",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-greater-than-or-equal\",\"payload\":{\"parameter-integer\":5}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-match",
+        "ruleId": "rule-greater-than-or-equal",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "less-than-match",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-less-than\",\"payload\":{\"parameter-integer\":4}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-match",
+        "ruleId": "rule-less-than",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "less-than-boundary",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-less-than\",\"payload\":{\"parameter-integer\":5}}",
+      "expected": {
+        "outcome": "NO_ACTION",
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "less-than-or-equal-boundary",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-less-than-or-equal\",\"payload\":{\"parameter-integer\":5}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-match",
+        "ruleId": "rule-less-than-or-equal",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "between-exclusive-middle",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-between-exclusive\",\"payload\":{\"parameter-integer\":5}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-match",
+        "ruleId": "rule-between-exclusive",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "between-exclusive-lower-boundary",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-between-exclusive\",\"payload\":{\"parameter-integer\":0}}",
+      "expected": {
+        "outcome": "NO_ACTION",
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "between-exclusive-upper-boundary",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-between-exclusive\",\"payload\":{\"parameter-integer\":10}}",
+      "expected": {
+        "outcome": "NO_ACTION",
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "between-inclusive-lower-boundary",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-between-inclusive\",\"payload\":{\"parameter-integer\":0}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-match",
+        "ruleId": "rule-between-inclusive",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "between-inclusive-upper-boundary",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-between-inclusive\",\"payload\":{\"parameter-integer\":10}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-match",
+        "ruleId": "rule-between-inclusive",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "signed-long-minimum",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-signed-range\",\"payload\":{\"parameter-integer\":-9223372036854775808}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-match",
+        "ruleId": "rule-signed-range",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "signed-long-maximum",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-signed-range\",\"payload\":{\"parameter-integer\":9223372036854775807}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-match",
+        "ruleId": "rule-signed-range",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "maximum-specificity-with-payload-extension",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-specificity\",\"payload\":{\"parameter-integer\":5,\"parameter-string\":null,\"parameter-boolean\":false,\"parameter-enum\":\"ZULU\"}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-specific",
+        "ruleId": "rule-specificity-specific",
+        "specificity": 3,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "general-wildcard-fallback",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-specificity\",\"payload\":{\"parameter-integer\":4}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-general",
+        "ruleId": "rule-specificity-general",
+        "specificity": 1,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "lexicographic-equal-specificity-tie",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-tie\",\"payload\":{\"parameter-integer\":5}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-tie-alpha",
+        "ruleId": "rule-tie-alpha",
+        "specificity": 2,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "typed-conjunctive-equality",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-type-equality\",\"payload\":{\"parameter-string\":\"VALUE\",\"parameter-boolean\":true,\"parameter-enum\":\"ALPHA\",\"parameter-integer\":99}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-type-equality",
+        "ruleId": "rule-type-equality",
+        "specificity": 6,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "empty-condition-set-and-omitted-empty-payload",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-empty\"}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-empty",
+        "ruleId": "rule-empty",
+        "specificity": 0,
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "event-filter-no-candidates",
+      "model": "phase-15",
+      "occurrence": "{\"eventId\":\"event-other\",\"payload\":{\"parameter-integer\":5}}",
+      "expected": {
+        "outcome": "NO_ACTION",
+        "modelRevision": "sha256:006f487c5123c12ad14a90c73bfa240198bdafe91eb8e26ba1eee1b7cb337d96"
+      }
+    },
+    {
+      "id": "legacy-binding-tie",
+      "model": "phase-14",
+      "occurrence": "{\"eventId\":\"event-contract\",\"payload\":{\"parameter-string\":null,\"parameter-integer\":-9223372036854775808}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-accept",
+        "ruleId": "rule-legacy",
+        "specificity": 3,
+        "modelRevision": "sha256:00afb3311b811c7a00540e19e7c721b73da07610f9b609a9b1f0a7f15ecbe0f0"
+      }
+    },
+    {
+      "id": "predefined-range-after-legacy-miss",
+      "model": "phase-14",
+      "occurrence": "{\"eventId\":\"event-contract\",\"payload\":{\"parameter-integer\":0}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-accept",
+        "ruleId": "rule-predefined",
+        "specificity": 3,
+        "modelRevision": "sha256:00afb3311b811c7a00540e19e7c721b73da07610f9b609a9b1f0a7f15ecbe0f0"
+      }
+    },
+    {
+      "id": "courier-action",
+      "model": "courier",
+      "occurrence": "{\"eventId\":\"event-order-product\",\"payload\":{\"parameter-delivery-type\":\"STANDARD\",\"parameter-product-category\":\"RETAIL\",\"parameter-quantity\":null,\"parameter-region\":\"LOCAL\",\"parameter-vip\":false}}",
+      "expected": {
+        "outcome": "ACTION",
+        "actionId": "action-local-courier",
+        "ruleId": "rule-test",
+        "specificity": 9,
+        "modelRevision": "sha256:80b79031c38d691528c8a8e10d6454d4b004e9f77665a47d73217d3b6ece55d5"
+      }
+    },
+    {
+      "id": "cancellation-no-action",
+      "model": "courier",
+      "occurrence": "{\"eventId\":\"event-cancel-order\",\"payload\":{\"parameter-order-reference\":\"ORDER-1000\"}}",
+      "expected": {
+        "outcome": "NO_ACTION",
+        "modelRevision": "sha256:80b79031c38d691528c8a8e10d6454d4b004e9f77665a47d73217d3b6ece55d5"
+      }
+    }
+  ]
+}

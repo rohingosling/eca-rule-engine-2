@@ -1,0 +1,197 @@
+.root
+{
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+}
+
+.root.theme-light
+{
+    -fx-base: #f4f7fb;
+    -fx-background: #f4f7fb;
+    -fx-control-inner-background: #ffffff;
+    -fx-control-inner-background-alt: #edf2f7;
+    -fx-accent: #356a9a;
+    -fx-default-button: #356a9a;
+    -fx-focus-color: #4f8bc0;
+    -fx-faint-focus-color: #4f8bc022;
+    -fx-selection-bar: #4a7fae;
+    -fx-selection-bar-non-focused: #d3d3d3;
+    -fx-text-base-color: #17212b;
+    -fx-text-background-color: #17212b;
+    -fx-text-inner-color: #17212b;
+    -eca-group-fill: #dce6f1;
+    -eca-border: #9fbad0;
+    -eca-read-only-fill: #e8edf3;
+    -eca-secondary-text: #52606d;
+    -eca-validation-error: #9f1d20;
+    -eca-terminal-background: #ffffff;
+    -eca-terminal-text: #17212b;
+    -eca-equation-background: #ffffff;
+    -eca-equation-border: #b8c8d6;
+}
+
+.root.theme-dark
+{
+    -fx-base: #323232;
+    -fx-background: #242424;
+    -fx-control-inner-background: #2c2c2c;
+    -fx-control-inner-background-alt: #373737;
+    -fx-accent: #999999;
+    -fx-default-button: #747474;
+    -fx-focus-color: #adadad;
+    -fx-faint-focus-color: #adadad33;
+    -fx-selection-bar: #858585;
+    -fx-selection-bar-non-focused: #454545;
+    -fx-text-base-color: #f3f3f3;
+    -fx-text-background-color: #f3f3f3;
+    -fx-text-inner-color: #f3f3f3;
+    -eca-group-fill: #3a3a3a;
+    -eca-border: #656565;
+    -eca-read-only-fill: #313131;
+    -eca-secondary-text: #c2c2c2;
+    -eca-validation-error: #a4a4a4;
+    -eca-terminal-background: #191919;
+    -eca-terminal-text: #e5e5e5;
+    -eca-equation-background: #2c2c2c;
+    -eca-equation-border: #838383;
+}
+
+.root.theme-light .tree-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected,
+.root.theme-dark .tree-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected
+{
+    -fx-text-fill: #000000;
+}
+
+.group-box > .title
+{
+    -fx-background-color: -eca-group-fill;
+    -fx-border-color: -eca-border;
+    -fx-font-weight: bold;
+}
+
+.group-box > .content
+{
+    -fx-background-color: transparent;
+    -fx-border-color: -eca-border;
+    -fx-padding: 12;
+}
+
+.group-box.workspace-panel > .content
+{
+    -fx-padding: 0;
+}
+
+.form-label
+{
+    -fx-alignment: center-left;
+}
+
+.read-only-value
+{
+    -fx-background-color: -eca-read-only-fill;
+    -fx-border-color: -eca-border;
+    -fx-padding: 5 7 5 7;
+}
+
+.secondary-text
+{
+    -fx-text-fill: -eca-secondary-text;
+}
+
+.validation-error
+{
+    -fx-text-fill: -eca-validation-error;
+}
+
+.message-terminal
+{
+    -fx-control-inner-background: -eca-terminal-background;
+    -fx-font-family: "Cascadia Mono", "Consolas", monospace;
+    -fx-text-fill: -eca-terminal-text;
+}
+
+.editor-scroll-pane,
+.editor-scroll-pane > .viewport
+{
+    -fx-background-color: transparent;
+}
+
+.editor-scroll-pane
+{
+    -fx-border-color: transparent;
+}
+
+.settings-master-detail
+{
+    -fx-background-color: transparent;
+    -fx-padding: 12;
+}
+
+.user-guide-scroll-pane,
+.user-guide-scroll-pane > .viewport
+{
+    -fx-background-color: transparent;
+}
+
+.user-guide-scroll-pane
+{
+    -fx-border-color: transparent;
+}
+
+.user-guide-content
+{
+    -fx-padding: 14;
+}
+
+.user-guide-section-heading
+{
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 0 0 0;
+}
+
+.user-guide-copy
+{
+    -fx-line-spacing: 2px;
+}
+
+.user-guide-equation-card
+{
+    -fx-background-color: -eca-equation-background;
+    -fx-border-color: -eca-equation-border;
+    -fx-padding: 12;
+}
+
+.user-guide-links
+{
+    -fx-padding: 0 0 4 0;
+}
+
+.table-view
+{
+    -fx-border-color: -eca-border;
+}
+
+.page-heading
+{
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+
+.about-application-name
+{
+    -fx-font-weight: bold;
+}
+
+.page-action-footer
+{
+    -fx-border-color: -eca-border transparent transparent transparent;
+    -fx-padding: 10 0 0 0;
+}
+
+.status-bar
+{
+    -fx-background-color: -eca-group-fill;
+    -fx-border-color: -eca-border transparent transparent transparent;
+    -fx-padding: 6 10 6 10;
+}

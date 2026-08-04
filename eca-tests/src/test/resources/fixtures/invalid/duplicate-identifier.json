@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","modelId":"invalid-fixture","name":"Invalid fixture","description":"Duplicate identifier fixture.","parameters":[],"payloads":[],"events":[],"conditions":[],"conditionSets":[],"actions":[{"id":"action-duplicate","name":"First","description":"First action."},{"id":"action-duplicate","name":"Second","description":"Second action."}],"rules":[]}

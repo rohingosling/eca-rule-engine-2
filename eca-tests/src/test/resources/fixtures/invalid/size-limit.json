@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","modelId":"invalid-fixture","name":"Invalid fixture","description":"Size limit fixture.","parameters":[],"payloads":[],"events":[],"conditions":[],"conditionSets":[],"actions":[{"id":"action-one","name":"One action","description":"Exceeds a zero-entity test limit."}],"rules":[]}
