@@ -1,0 +1,133 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      approved_recovery:
+        description: Deploy the selected ref as an explicitly approved recovery
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Verify and package Pages artifact
+    if: github.event_name == 'push' || inputs.approved_recovery == true
+    runs-on: windows-2025
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out public source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Java 25 for the browser-to-server contract gate
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
+        with:
+          distribution: oracle
+          java-version: "25.0.2"
+          cache: maven
+
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24.15.0"
+          cache: npm
+          cache-dependency-path: eca-web/package-lock.json
+
+      - name: Install locked dependencies and browser engines
+        shell: cmd
+        working-directory: eca-web
+        run: |
+          call npm ci
+          call npx playwright install chromium firefox webkit
+
+      - name: Run TypeScript, unit, property, contract, browser, accessibility, build, and artifact gates
+        shell: cmd
+        working-directory: eca-web
+        run: npm run verify
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+
+      - name: Upload the verified GitHub Pages artifact
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
+        with:
+          path: eca-web/dist
+
+  deploy:
+    name: Deploy verified Pages artifact
+    needs: build
+    runs-on: windows-2025
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
+
+  smoke:
+    name: Smoke published Pages application
+    needs: deploy
+    runs-on: windows-2025
+    timeout-minutes: 15
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out exact deployed source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24.15.0"
+          cache: npm
+          cache-dependency-path: eca-web/package-lock.json
+
+      - name: Install locked dependencies and Chromium
+        shell: cmd
+        working-directory: eca-web
+        run: |
+          call npm ci
+          call npx playwright install chromium
+
+      - name: Smoke the emitted HTTPS page URL
+        shell: cmd
+        working-directory: eca-web
+        env:
+          ECA_PHASE_21_BASE_URL: ${{ needs.deploy.outputs.page_url }}
+        run: npm run test:phase21
+
+      - name: Retain Phase 21 browser evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: phase-21-browser-evidence-${{ github.sha }}
+          path: |
+            eca-web/playwright-report/phase-21
+            eca-web/test-results
+          if-no-files-found: warn
+          retention-days: 14

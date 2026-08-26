@@ -1,0 +1,759 @@
+.root
+{
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+}
+
+.root.theme-light
+{
+    -fx-base: #f7f8fa;
+    -fx-background: #f1f3f5;
+    -fx-control-inner-background: #ffffff;
+    -fx-control-inner-background-alt: #f8fafc;
+    -fx-accent: #1663ad;
+    -fx-default-button: #1663ad;
+    -fx-focus-color: #005fcc;
+    -fx-faint-focus-color: #005fcc22;
+    -fx-selection-bar: #cfe7ff;
+    -fx-selection-bar-non-focused: #cfe7ff;
+    -fx-text-base-color: #17212b;
+    -fx-text-background-color: #17212b;
+    -fx-text-inner-color: #17212b;
+    -eca-application-title: #0e497f;
+    -eca-border: #aeb8c2;
+    -eca-console-error: #b42318;
+    -eca-console-message: #357a38;
+    -eca-console-surface: #f8fafc;
+    -eca-console-warning: #075ea8;
+    -eca-control-border: #8e9aa7;
+    -eca-control-hover: #e7f1fb;
+    -eca-dropdown-selection: #cfe7ff;
+    -eca-group-fill: #e4eaf0;
+    -eca-menu-surface: #f4f6f8;
+    -eca-read-only-fill: #edf0f3;
+    -eca-secondary-text: #4e5d6b;
+    -eca-server-connected: #2f6f32;
+    -eca-server-connecting: #8a5200;
+    -eca-server-disconnected: #b42318;
+    -eca-surface: #f1f3f5;
+    -eca-surface-raised: #ffffff;
+    -eca-text: #17212b;
+    -eca-validation-error: #b42318;
+    -eca-equation-background: transparent;
+    -eca-equation-border: #aeb8c2;
+}
+
+.root.theme-dark
+{
+    -fx-base: #292929;
+    -fx-background: #1b1b1b;
+    -fx-control-inner-background: #181818;
+    -fx-control-inner-background-alt: #242424;
+    -fx-accent: #f0f0f0;
+    -fx-default-button: #292929;
+    -fx-focus-color: #ffffff;
+    -fx-faint-focus-color: #ffffff33;
+    -fx-selection-bar: #3d3d3d;
+    -fx-selection-bar-non-focused: #3d3d3d;
+    -fx-text-base-color: #f2f2f2;
+    -fx-text-background-color: #f2f2f2;
+    -fx-text-inner-color: #f2f2f2;
+    -eca-application-title: #2b2b2b;
+    -eca-border: #555555;
+    -eca-console-error: #ff7b72;
+    -eca-console-message: #7ee787;
+    -eca-console-surface: #161616;
+    -eca-console-warning: #6cb6ff;
+    -eca-control-border: #707070;
+    -eca-control-hover: #383838;
+    -eca-dropdown-selection: #3d3d3d;
+    -eca-group-fill: #2c2c2c;
+    -eca-menu-surface: #222222;
+    -eca-read-only-fill: #222222;
+    -eca-secondary-text: #bdbdbd;
+    -eca-server-connected: #7ee787;
+    -eca-server-connecting: #ffcc66;
+    -eca-server-disconnected: #ff7b72;
+    -eca-surface: #1b1b1b;
+    -eca-surface-raised: #242424;
+    -eca-text: #f2f2f2;
+    -eca-validation-error: #ff7b72;
+    -eca-equation-background: transparent;
+    -eca-equation-border: #555555;
+}
+
+.root.theme-light .tree-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected
+{
+    -fx-text-fill: #17212b;
+}
+
+.root.theme-dark .tree-view:focused > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected
+{
+    -fx-text-fill: #f2f2f2;
+}
+
+/* Indent every tree level by the width of the disclosure node, so a node's expand arrow aligns with the icon of its
+   parent. The platform theme pads the disclosure node by 8 on the left and 6 on the right and sizes its arrow purely
+   from an em-based padding of 0.229em per side, which is 5.95 at the 13px application font, giving 19.95 that the
+   layout snaps to 20. The disclosure node itself must keep the theme's own metrics: its arrow is a shape-scaled
+   region with no maximum size, so widening the space it is laid out in stretches the glyph instead of moving it. */
+
+.tree-view > .virtual-flow > .clipped-container > .sheet > .tree-cell
+{
+    -fx-indent: 20;
+}
+
+.group-box > .title
+{
+    -fx-background-color: -eca-group-fill;
+    -fx-border-color: -eca-border;
+    -fx-font-weight: bold;
+}
+
+.group-box > .content
+{
+    -fx-background-color: transparent;
+    -fx-border-color: -eca-border;
+    -fx-padding: 12;
+}
+
+.group-box.workspace-panel > .content
+{
+    -fx-padding: 0;
+}
+
+.form-label
+{
+    -fx-alignment: center-left;
+}
+
+.read-only-value
+{
+    -fx-background-color: -eca-read-only-fill;
+    -fx-border-color: -eca-border;
+    -fx-padding: 5 7 5 7;
+}
+
+.secondary-text
+{
+    -fx-text-fill: -eca-secondary-text;
+}
+
+.validation-error
+{
+    -fx-text-fill: -eca-validation-error;
+}
+
+.fluent-icon
+{
+    -fx-fill: -eca-text;
+}
+
+.button,
+.toggle-button,
+.menu-button
+{
+    -fx-alignment: center;
+    -fx-background-color: -eca-surface-raised;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3;
+    -fx-border-color: -eca-control-border;
+    -fx-border-insets: 0;
+    -fx-border-radius: 3;
+    -fx-border-width: 1;
+    -fx-min-height: 26;
+    -fx-padding: 3 8 3 8;
+    -fx-text-fill: -eca-text;
+}
+
+.button:hover,
+.toggle-button:hover,
+.menu-button:hover
+{
+    -fx-background-color: -eca-control-hover;
+    -fx-border-color: -fx-focus-color;
+}
+
+.button:pressed,
+.toggle-button:pressed,
+.toggle-button:selected,
+.menu-button:showing
+{
+    -fx-background-color: -fx-selection-bar;
+}
+
+.button:focused,
+.toggle-button:focused,
+.menu-button:focused
+{
+    -fx-border-color: -fx-focus-color;
+}
+
+.button:disabled,
+.toggle-button:disabled,
+.menu-button:disabled
+{
+    -fx-opacity: 0.72;
+}
+
+.text-input,
+.combo-box-base
+{
+    -fx-background-color: -fx-control-inner-background;
+    -fx-background-insets: 0;
+    -fx-background-radius: 2;
+    -fx-border-color: -eca-control-border;
+    -fx-border-insets: 0;
+    -fx-border-radius: 2;
+    -fx-border-width: 1;
+    -fx-min-height: 27;
+    -fx-padding: 3 6 3 6;
+    -fx-text-fill: -eca-text;
+}
+
+.text-input:focused,
+.combo-box-base:focused
+{
+    -fx-border-color: -fx-focus-color;
+}
+
+.text-input:disabled,
+.combo-box-base:disabled
+{
+    -fx-opacity: 0.72;
+}
+
+.text-area
+{
+    -fx-padding: 0;
+}
+
+.text-area .content
+{
+    -fx-background-color: -fx-control-inner-background;
+    -fx-background-radius: 2;
+    -fx-padding: 3 6 3 6;
+}
+
+.combo-box-base > .arrow-button
+{
+    -fx-background-color: transparent;
+    -fx-padding: 0 6 0 6;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected,
+.combo-box-popup .list-view .list-cell:filled:selected:hover
+{
+    -fx-background-color: -eca-dropdown-selection;
+    -fx-text-fill: -eca-text;
+}
+
+.menu-bar
+{
+    -fx-background-color: -eca-menu-surface;
+    -fx-border-color: transparent transparent -eca-border transparent;
+    -fx-padding: 0 3 0 3;
+}
+
+.menu-bar > .container > .menu-button
+{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+    -fx-border-radius: 0;
+    -fx-min-height: 0;
+    -fx-padding: 2 10 2 10;
+}
+
+.menu-bar > .container > .menu-button:hover,
+.menu-bar > .container > .menu-button:showing
+{
+    -fx-background-color: -fx-selection-bar;
+    -fx-border-color: transparent;
+}
+
+.context-menu
+{
+    -fx-background-color: -eca-menu-surface;
+    -fx-border-color: -eca-border;
+    -fx-padding: 4;
+}
+
+.root.theme-dark .context-menu .separator:horizontal .line
+{
+    -fx-border-color: #7a7a7a transparent transparent transparent;
+}
+
+.context-menu .menu-item > .right-container,
+.context-menu .theme-submenu > .right-container
+{
+    -fx-alignment: center-right;
+    -fx-padding: 0 0 0 12;
+}
+
+.command-toolbar
+{
+    -fx-background-color: -eca-surface-raised;
+    -fx-border-color: transparent transparent -eca-border transparent;
+    -fx-padding: 3 6 3 6;
+    -fx-pref-height: 38;
+    -fx-min-height: 38;
+}
+
+.command-toolbar .toolbar-button
+{
+    -fx-alignment: center;
+    -fx-background-insets: 0;
+    -fx-padding: 3;
+    -fx-pref-height: 28;
+    -fx-min-height: 28;
+    -fx-max-height: 28;
+    -fx-pref-width: 30;
+    -fx-min-width: 30;
+    -fx-max-width: 30;
+}
+
+.command-toolbar .separator:vertical
+{
+    -fx-padding: 2 5 2 5;
+}
+
+.toolbar-theme-button > .arrow-button
+{
+    -fx-padding: 0;
+    -fx-pref-width: 0;
+    -fx-min-width: 0;
+    -fx-max-width: 0;
+}
+
+.toolbar-theme-button > .label
+{
+    -fx-alignment: center;
+    -fx-padding: 0;
+}
+
+.toolbar-theme-button > .arrow-button > .arrow
+{
+    -fx-padding: 0;
+}
+
+.console-panel
+{
+    -fx-background-color: -eca-console-surface;
+    -fx-border-color: -eca-border transparent transparent transparent;
+}
+
+.console-title-bar
+{
+    -fx-background-color: -eca-group-fill;
+    -fx-border-color: transparent transparent -eca-border transparent;
+    -fx-min-height: 35;
+}
+
+.console-title
+{
+    -fx-font-weight: bold;
+}
+
+.console-controls .check-box
+{
+    -fx-padding: 0 0 0 0;
+}
+
+.console-table
+{
+    -fx-background-color: -eca-console-surface;
+    -fx-control-inner-background: -eca-console-surface;
+    -fx-table-cell-border-color: transparent;
+}
+
+.console-table .column-header-background
+{
+    -fx-background-color: -eca-group-fill;
+    -fx-max-height: 0;
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-padding: 0;
+}
+
+.console-table .table-row-cell
+{
+    -fx-background-color: -eca-console-surface;
+    -fx-border-width: 0 0 0 4;
+}
+
+.console-table .table-cell
+{
+    -fx-border-color: transparent;
+}
+
+.console-table .table-row-cell:hover,
+.console-table .table-row-cell:focused,
+.console-table:focused .table-row-cell:selected
+{
+    -fx-background-color: -fx-selection-bar;
+    -fx-table-cell-border-color: transparent;
+}
+
+.console-table .table-row-cell:selected
+{
+    -fx-background-color: -eca-console-surface;
+}
+
+.console-table:focused .table-row-cell:selected
+{
+    -fx-background-color: -fx-selection-bar;
+}
+
+.console-table .console-row-message
+{
+    -fx-border-color: transparent transparent transparent -eca-console-message;
+}
+
+.console-table .console-row-warning
+{
+    -fx-border-color: transparent transparent transparent -eca-console-warning;
+}
+
+.console-table .console-row-error
+{
+    -fx-border-color: transparent transparent transparent -eca-console-error;
+}
+
+.console-context-button
+{
+    -fx-alignment: center;
+    -fx-min-height: 21;
+    -fx-padding: 1 10 1 10;
+    -fx-text-alignment: center;
+}
+
+.console-severity-symbol
+{
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+    -fx-alignment: center;
+    -fx-min-width: 17;
+    -fx-min-height: 17;
+    -fx-pref-width: 17;
+    -fx-pref-height: 17;
+    -fx-max-width: 17;
+    -fx-max-height: 17;
+    -fx-background-color: transparent;
+    -fx-background-radius: 999;
+    -fx-border-radius: 999;
+    -fx-border-width: 1;
+}
+
+.console-severity-message .label
+{
+    -fx-text-fill: -eca-console-message;
+}
+
+.console-severity-message .console-severity-symbol
+{
+    -fx-border-color: -eca-console-message;
+}
+
+.console-severity-warning .label
+{
+    -fx-text-fill: -eca-console-warning;
+}
+
+.console-severity-warning .console-severity-symbol
+{
+    -fx-border-color: -eca-console-warning;
+}
+
+.console-severity-error .label
+{
+    -fx-text-fill: -eca-console-error;
+}
+
+.console-severity-error .console-severity-symbol
+{
+    -fx-border-color: -eca-console-error;
+}
+
+.editor-scroll-pane,
+.editor-scroll-pane > .viewport
+{
+    -fx-background-color: transparent;
+}
+
+.editor-scroll-pane
+{
+    -fx-border-color: transparent;
+}
+
+.settings-master-detail
+{
+    -fx-background-color: transparent;
+    -fx-padding: 12;
+}
+
+.user-guide-scroll-pane,
+.user-guide-scroll-pane > .viewport
+{
+    -fx-background-color: transparent;
+}
+
+.user-guide-scroll-pane
+{
+    -fx-border-color: transparent;
+}
+
+.user-guide-content
+{
+    -fx-padding: 14;
+}
+
+.user-guide-section-heading
+{
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 0 0 0;
+}
+
+.user-guide-copy
+{
+    -fx-line-spacing: 2px;
+}
+
+.user-guide-equation-card
+{
+    -fx-background-color: -eca-equation-background;
+    -fx-border-color: -eca-equation-border;
+    -fx-padding: 12;
+}
+
+.user-guide-links
+{
+    -fx-padding: 0 0 4 0;
+}
+
+.table-view
+{
+    -fx-border-color: -eca-border;
+}
+
+.page-heading
+{
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+
+.about-application-name
+{
+    -fx-font-weight: bold;
+}
+
+.about-technical-note-label
+{
+    -fx-font-weight: bold;
+}
+
+.about-technical-note-link
+{
+    -fx-padding: 0;
+}
+
+.about-tab-pane
+{
+    -fx-background-color: transparent;
+    -fx-tab-max-height: 30;
+    -fx-tab-min-height: 30;
+}
+
+.about-tab-pane > .tab-header-area
+{
+    -fx-padding: 0;
+}
+
+.about-tab-pane > .tab-header-area > .tab-header-background
+{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent -eca-border transparent;
+}
+
+.about-tab-pane > .tab-header-area > .headers-region > .tab
+{
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 5 12 5 12;
+}
+
+.about-tab-pane > .tab-header-area > .headers-region > .tab:hover,
+.about-tab-pane > .tab-header-area > .headers-region > .tab:focused
+{
+    -fx-background-color: -eca-control-hover;
+}
+
+.about-tab-pane > .tab-header-area > .headers-region > .tab:selected
+{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent -fx-accent transparent;
+}
+
+.about-tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label
+{
+    -fx-text-fill: -eca-text;
+}
+
+.about-tab-pane > .tab-content-area
+{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.about-licences-content,
+.about-release-notes-content
+{
+    -fx-padding: 10 2 2 2;
+}
+
+
+.page-action-footer
+{
+    -fx-border-color: -eca-border transparent transparent transparent;
+    -fx-padding: 8;
+    -fx-spacing: 6;
+    -fx-alignment: center-right;
+}
+
+.page-action-footer-scroll,
+.page-action-footer-scroll > .viewport
+{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.status-bar
+{
+    -fx-background-color: -eca-group-fill;
+    -fx-font-size: 11px;
+    -fx-min-height: 25;
+    -fx-padding: 0;
+}
+
+.status-scroll-pane,
+.status-scroll-pane > .viewport
+{
+    -fx-background-color: -eca-group-fill;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.status-scroll-pane
+{
+    -fx-border-color: -eca-border transparent transparent transparent;
+    -fx-min-height: 25;
+}
+
+.status-segment
+{
+    -fx-border-color: transparent -eca-border transparent transparent;
+    -fx-padding: 3 7 3 7;
+}
+
+.status-bar .button
+{
+    -fx-min-height: 20;
+    -fx-padding: 1 7 1 7;
+}
+
+.connection-value-connected
+{
+    -fx-text-fill: -eca-server-connected;
+}
+
+.connection-value-connecting
+{
+    -fx-text-fill: -eca-server-connecting;
+}
+
+.connection-value-disconnected
+{
+    -fx-text-fill: -eca-server-disconnected;
+}
+
+.themed-dialog
+{
+    -fx-background-color: -eca-surface-raised;
+    -fx-border-color: -eca-border;
+}
+
+.modal-owner-dimmed
+{
+    -fx-opacity: 0.72;
+}
+
+.themed-dialog > .header-panel
+{
+    -fx-background-color: -eca-application-title;
+    -fx-padding: 0;
+}
+
+.dialog-title-bar
+{
+    -fx-alignment: center-left;
+    -fx-background-color: -eca-application-title;
+    -fx-padding: 0 0 0 10;
+    -fx-min-height: 34;
+}
+
+.dialog-title
+{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.dialog-close-button
+{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-pref-height: 28;
+    -fx-min-height: 28;
+    -fx-max-height: 28;
+    -fx-pref-width: 30;
+    -fx-min-width: 30;
+    -fx-max-width: 30;
+    -fx-padding: 3;
+}
+
+.themed-dialog > .content
+{
+    -fx-padding: 18;
+}
+
+.dialog-content-scroll,
+.dialog-content-scroll > .viewport
+{
+    -fx-background-color: transparent;
+}
+
+.dialog-content-scroll
+{
+    -fx-border-color: transparent;
+}
+
+.themed-dialog > .button-bar > .container
+{
+    -fx-background-color: -eca-surface;
+    -fx-border-color: -eca-border transparent transparent transparent;
+    -fx-padding: 8;
+    -fx-spacing: 6;
+}
+
+.danger-button
+{
+    -fx-border-color: -eca-validation-error;
+    -fx-text-fill: -eca-validation-error;
+}

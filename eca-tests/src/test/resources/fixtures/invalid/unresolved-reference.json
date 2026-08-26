@@ -1,0 +1,1 @@
+{"schemaVersion":"1.0","modelId":"invalid-fixture","name":"Invalid fixture","description":"Unresolved reference fixture.","parameters":[],"payloads":[],"events":[{"id":"event-invalid","name":"Invalid event","description":"References a missing payload.","payloadId":"payload-missing"}],"conditions":[],"conditionSets":[],"actions":[],"rules":[]}

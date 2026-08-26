@@ -1,0 +1,32 @@
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": "\\Qcom/rohingosling/eca/client/messages.properties\\E"
+      },
+      {
+        "pattern": "\\Qcom/rohingosling/eca/client/client.css\\E"
+      },
+      {
+        "pattern": "\\Qcom/rohingosling/eca/client/eca-rule-engine.png\\E"
+      },
+      {
+        "pattern": "\\Qcom/rohingosling/eca/client/user-guide/\\E.*\\.png"
+      },
+      {
+        "pattern": "\\Qcom/rohingosling/eca/client/icons/\\E.*\\.svg"
+      },
+      {
+        "pattern": "\\Qcom/rohingosling/eca/client/notices/fluent-ui-system-icons.txt\\E"
+      },
+      {
+        "pattern": "\\Qcom/rohingosling/eca/client/notices/eca-rule-engine-license.txt\\E"
+      }
+    ]
+  },
+  "bundles": [
+    {
+      "name": "com.rohingosling.eca.client.messages"
+    }
+  ]
+}

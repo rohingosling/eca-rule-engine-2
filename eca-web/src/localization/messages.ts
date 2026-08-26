@@ -1,0 +1,21 @@
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Name:    messages
+// Version: 2.0.0
+// Date:    2026-08-02
+// Author:  Rohin Gosling
+//
+// Description:
+//
+//   Provides strongly typed access to the web client's localized presentation strings.
+//
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import messages from "./en.json";
+
+export type MessageKey = keyof typeof messages;
+
+export function text ( messageKey: MessageKey ): string
+{
+    return messages [ messageKey ];
+}

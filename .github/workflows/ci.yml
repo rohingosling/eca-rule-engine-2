@@ -1,0 +1,274 @@
+name: Continuous Integration
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+jobs:
+  jvm:
+    name: JVM verification
+    runs-on: windows-2025
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Java 25
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
+        with:
+          distribution: oracle
+          java-version: "25.0.2"
+          cache: maven
+
+      - name: Verify production reactor
+        shell: cmd
+        run: build.bat -B -ntp
+
+  web:
+    name: Web shell verification
+    runs-on: windows-2025
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Java 25 for the browser-to-server contract gate
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
+        with:
+          distribution: oracle
+          java-version: "25.0.2"
+          cache: maven
+
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24.15.0"
+          cache: npm
+          cache-dependency-path: eca-web/package-lock.json
+
+      - name: Install locked web dependencies and browser engines
+        shell: cmd
+        working-directory: eca-web
+        run: |
+          call npm ci
+          call npx playwright install chromium firefox webkit
+
+      - name: Verify web shell and production artifact
+        shell: cmd
+        run: build-web.bat
+
+  native:
+    name: Windows Server 2025 native verification
+    needs: jvm
+    runs-on: windows-2025
+    timeout-minutes: 90
+    outputs:
+      server_sha256: ${{ steps.stage.outputs.server_sha256 }}
+      client_sha256: ${{ steps.stage.outputs.client_sha256 }}
+      msvc_toolset_version: ${{ steps.stage.outputs.msvc_toolset_version }}
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+
+      - name: Set up pinned server GraalVM
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
+        with:
+          distribution: graalvm
+          java-version: "25.0.4"
+          cache: maven
+
+      - name: Download pinned Gluon client GraalVM
+        shell: pwsh
+        run: |
+          $archivePath = Join-Path $env:RUNNER_TEMP "graalvm-svm-java17-windows-gluon-22.1.0.1-Final.zip"
+          $downloadUri = "https://github.com/gluonhq/graal/releases/download/gluon-22.1.0.1-Final/graalvm-svm-java17-windows-gluon-22.1.0.1-Final.zip"
+          Invoke-WebRequest -Uri $downloadUri -OutFile $archivePath
+          $actualHash = ( Get-FileHash -LiteralPath $archivePath -Algorithm SHA256 ).Hash
+          $expectedHash = "CD1ECD4AF199AE3D849F9E696125CF042B672E863D4EC7169CC32FDA847F1970"
+          if ( $actualHash -ne $expectedHash )
+          {
+              throw "Gluon GraalVM SHA-256 mismatch: $actualHash"
+          }
+          Expand-Archive -LiteralPath $archivePath -DestinationPath $env:RUNNER_TEMP
+          "CLIENT_GRAALVM_HOME=$env:RUNNER_TEMP\graalvm-svm-java17-windows-gluon-22.1.0.1-Final" |
+              Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Select pinned server GraalVM
+        shell: pwsh
+        run: |
+          "SERVER_GRAALVM_HOME=$env:JAVA_HOME" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Prepare pinned JavaFX static SDK
+        shell: pwsh
+        run: .\.github\scripts\native\prepare-javafx-static-sdk.ps1
+
+      - name: Install or update Microsoft x64 runtime
+        shell: pwsh
+        run: |
+          $installerPath = Join-Path $env:RUNNER_TEMP "vc_redist.x64.exe"
+          Invoke-WebRequest -Uri "https://aka.ms/vc14/vc_redist.x64.exe" -OutFile $installerPath
+          $signature = Get-AuthenticodeSignature -LiteralPath $installerPath
+          if (
+              $signature.Status -ne "Valid" -or
+              $signature.SignerCertificate.Subject -notmatch "(?:^|, )O=Microsoft Corporation(?:,|$)"
+          )
+          {
+              throw "The Microsoft x64 runtime installer signature is invalid."
+          }
+          $installerProcess = Start-Process `
+              -FilePath $installerPath `
+              -ArgumentList "/install", "/quiet", "/norestart" `
+              -Wait `
+              -PassThru
+          if ( $installerProcess.ExitCode -notin @( 0, 1638, 3010 ) )
+          {
+              throw "The Microsoft x64 runtime installer exited with code $($installerProcess.ExitCode)."
+          }
+
+      - name: Build production native executables
+        shell: cmd
+        run: build-native.bat
+
+      - name: Verify trusted native candidate with rendered client launch
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
+        shell: pwsh
+        run: |
+          $reportDirectory = Join-Path $env:RUNNER_TEMP "native-evidence"
+          & ".\.github\scripts\native\verify-native-artifacts.ps1" `
+              -ReportDirectory $reportDirectory `
+              -UseAsciiTemporaryPath
+
+      - name: Verify native candidate with static-only untrusted-event fallback
+        if: github.event_name != 'push' || (github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/tags/'))
+        shell: pwsh
+        run: |
+          $reportDirectory = Join-Path $env:RUNNER_TEMP "native-evidence"
+          & ".\.github\scripts\native\verify-native-artifacts.ps1" `
+              -ReportDirectory $reportDirectory `
+              -SkipClientLaunch
+
+      - name: Measure native server performance
+        shell: pwsh
+        run: |
+          $reportPath = Join-Path $env:RUNNER_TEMP "native-performance.md"
+          & ".\.github\scripts\native\measure-native-performance.ps1" -ReportPath $reportPath
+
+      - name: Stage exact release artifact
+        id: stage
+        shell: pwsh
+        run: |
+          $visualStudioRoot = Join-Path $env:ProgramFiles "Microsoft Visual Studio"
+          $dumpbinPath = Get-ChildItem `
+              -LiteralPath $visualStudioRoot `
+              -Recurse `
+              -Filter "dumpbin.exe" `
+              -ErrorAction SilentlyContinue |
+                  Where-Object { $_.FullName -match '\\Hostx64\\x64\\|\\Hostx86\\x64\\' } |
+                  Sort-Object FullName -Descending |
+                  Select-Object -First 1 -ExpandProperty FullName
+          if ( [string]::IsNullOrWhiteSpace( $dumpbinPath ) )
+          {
+              throw "dumpbin.exe was not found in the installed Visual Studio toolchains."
+          }
+          $toolsetMatch = [regex]::Match( $dumpbinPath, '\\VC\\Tools\\MSVC\\(?<Version>\d+\.\d+\.\d+)\\' )
+          if ( -not $toolsetMatch.Success )
+          {
+              throw "The selected dumpbin path does not identify its MSVC toolset version: $dumpbinPath"
+          }
+          $artifactDirectory = Join-Path $env:RUNNER_TEMP "eca-windows-x64"
+          & ".\.github\scripts\release\stage-release-artifacts.ps1" `
+              -ServerExecutablePath ".\eca-server\target\eca-server.exe" `
+              -ClientExecutablePath ".\eca-client\target\gluonfx\x86_64-windows\eca-client.exe" `
+              -DestinationDirectory $artifactDirectory `
+              -MsvcToolsetVersion $toolsetMatch.Groups.get_Item( "Version" ).Value `
+              -GitHubOutputPath $env:GITHUB_OUTPUT
+          $verificationArguments = @{
+              ArtifactDirectory = $artifactDirectory
+          }
+          if ( $env:GITHUB_REF_TYPE -eq "tag" )
+          {
+              $verificationArguments.Tag = $env:GITHUB_REF_NAME
+          }
+          & ".\.github\scripts\release\verify-release-contract.ps1" @verificationArguments
+
+      - name: Upload commit-addressed Windows x64 artifact
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: eca-windows-x64-${{ github.sha }}
+          path: ${{ runner.temp }}\eca-windows-x64\*
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
+
+  release:
+    name: Publish verified tag release
+    needs: native
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    runs-on: windows-2025
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Download same-run verified artifact
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: eca-windows-x64-${{ github.sha }}
+          path: ${{ runner.temp }}\eca-windows-x64
+
+      - name: Re-verify tag, versions, filenames, and hashes
+        shell: pwsh
+        run: |
+          & ".\.github\scripts\release\verify-release-contract.ps1" `
+              -ArtifactDirectory ( Join-Path $env:RUNNER_TEMP "eca-windows-x64" ) `
+              -Tag $env:GITHUB_REF_NAME `
+              -ExpectedServerHash "${{ needs.native.outputs.server_sha256 }}" `
+              -ExpectedClientHash "${{ needs.native.outputs.client_sha256 }}" `
+              -SkipServerVersionExecution
+
+      - name: Generate tag-bound release notes
+        shell: pwsh
+        run: |
+          & ".\.github\scripts\release\new-release-notes.ps1" `
+              -Tag $env:GITHUB_REF_NAME `
+              -SourceCommit $env:GITHUB_SHA `
+              -ArtifactDirectory ( Join-Path $env:RUNNER_TEMP "eca-windows-x64" ) `
+              -WorkflowRunUrl "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" `
+              -MsvcToolsetVersion "${{ needs.native.outputs.msvc_toolset_version }}" `
+              -OutputPath ( Join-Path $env:RUNNER_TEMP "release-notes.md" )
+
+      - name: Create, re-verify, and publish immutable release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          & ".\.github\scripts\release\publish-github-release.ps1" `
+              -Repository $env:GITHUB_REPOSITORY `
+              -Tag $env:GITHUB_REF_NAME `
+              -ArtifactDirectory ( Join-Path $env:RUNNER_TEMP "eca-windows-x64" ) `
+              -ReleaseNotesPath ( Join-Path $env:RUNNER_TEMP "release-notes.md" ) `
+              -ExpectedServerHash "${{ needs.native.outputs.server_sha256 }}" `
+              -ExpectedClientHash "${{ needs.native.outputs.client_sha256 }}"

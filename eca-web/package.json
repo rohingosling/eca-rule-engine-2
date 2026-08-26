@@ -1,0 +1,53 @@
+{
+  "name": "eca-rule-engine-web",
+  "private": true,
+  "version": "2.1.0",
+  "type": "module",
+  "engines": {
+    "node": "24.15.0",
+    "npm": "11.12.1"
+  },
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "verify:resources": "node scripts/verify-resources.mjs",
+    "build": "vite build && node scripts/verify-artifact.mjs",
+    "preview": "vite preview",
+    "test:phase13": "playwright test",
+    "test:phase13:update": "playwright test --update-snapshots=all",
+    "test:phase14": "vitest run --config vitest.config.ts --configLoader runner",
+    "test:phase14:watch": "vitest --config vitest.config.ts --configLoader runner",
+    "test:phase15": "vitest run --config vitest.phase-15.config.ts --configLoader runner",
+    "test:phase15:watch": "vitest --config vitest.phase-15.config.ts --configLoader runner",
+    "test:phase16": "vitest run --config vitest.phase-16.config.ts --configLoader runner",
+    "test:phase16:watch": "vitest --config vitest.phase-16.config.ts --configLoader runner",
+    "test:phase17": "vitest run --config vitest.phase-17.config.ts --configLoader runner",
+    "test:phase17:watch": "vitest --config vitest.phase-17.config.ts --configLoader runner",
+    "test:phase17:browser": "playwright test --config playwright.phase-17.config.ts",
+    "test:phase18": "vitest run --config vitest.phase-18.config.ts --configLoader runner",
+    "test:phase18:watch": "vitest --config vitest.phase-18.config.ts --configLoader runner",
+    "test:phase18:browser": "playwright test --config playwright.phase-18.config.ts",
+    "test:phase19:browser": "node scripts/run-phase-19-browser-tests.mjs",
+    "test:browser": "playwright test --config playwright.phase-20.config.ts",
+    "test:browser:update": "playwright test --config playwright.phase-20.config.ts --update-snapshots=all",
+    "test:phase21": "playwright test --config playwright.phase-21.config.ts",
+    "verify": "npm run verify:resources && npm run typecheck && npm run build && npm run test:phase14 && npm run test:phase15 && npm run test:phase16 && npm run test:phase17 && npm run test:phase18 && npm run test:phase13 && npm run test:phase17:browser && npm run test:phase18:browser && npm run test:phase19:browser && npm run test:browser && npm run test:phase21"
+  },
+  "dependencies": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@playwright/test": "1.61.1",
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.4",
+    "fast-check": "4.9.0",
+    "playwright-core": "1.61.1",
+    "typescript": "7.0.2",
+    "vite": "8.1.5",
+    "vitest": "4.1.10"
+  }
+}

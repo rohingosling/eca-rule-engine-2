@@ -1,0 +1,16 @@
+[
+  {
+    "name": "com.sun.glass.ui.win.WinAccessible",
+    "allDeclaredFields": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.sun.glass.ui.win.WinTextRangeProvider",
+    "allDeclaredFields": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "com.sun.glass.ui.win.WinVariant",
+    "allDeclaredFields": true
+  }
+]

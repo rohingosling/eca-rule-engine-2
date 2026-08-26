@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.rohingosling.eca</groupId>
+        <artifactId>eca-rule-engine-2</artifactId>
+        <version>2.1.0</version>
+    </parent>
+
+    <artifactId>eca-json</artifactId>
+    <name>ECA JSON</name>
+    <description>Jackson codecs, schema support, and canonical serialization.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.rohingosling.eca</groupId>
+            <artifactId>eca-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rohingosling.eca</groupId>
+            <artifactId>eca-application</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+    </dependencies>
+</project>

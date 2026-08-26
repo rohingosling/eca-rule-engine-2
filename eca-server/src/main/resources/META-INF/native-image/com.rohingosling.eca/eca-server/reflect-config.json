@@ -1,0 +1,110 @@
+[
+  {
+    "name": "io.helidon.common.config.ConfigFactory__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.common.mapper.DefaultMapperProvider__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.common.mapper.DefaultResolverService__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.common.mapper.MappersFactory__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.common.mapper.MappersImpl__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.config.ConfigProvider__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.config.ConfigurationValueFactory__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.config.MetaConfigFactory__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.http.Headers__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.http.HttpPrologue__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.http.ServerRequestHeaders__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.metrics.api.MeterRegistryFactory__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.metrics.api.MetricsFactoryFactory__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.service.registry.EventManagerImpl__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.service.registry.InstanceName__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.service.registry.InterceptionMetadata__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.service.registry.PerRequestScopeHandler__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.service.registry.Scopes__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.service.registry.ServiceLoader__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.service.registry.ServiceRegistry__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.webserver.LoomServer__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.webserver.RequestScopeFeatureProvider__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.webserver.WebServerService__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.webserver.WebServerStarterService__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.webserver.http.HttpEntryPointsImpl__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.webserver.http.ServerRequest__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.helidon.webserver.http.ServerResponse__ServiceDescriptor",
+    "allDeclaredConstructors": true
+  }
+]
